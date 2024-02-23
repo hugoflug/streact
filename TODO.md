@@ -1,0 +1,2 @@
+- Support tabs, columns etc.
+- If `key` is not provided on a Streamlit element, calculate it from `label` just like Streamlit does it
