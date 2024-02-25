@@ -65,8 +65,13 @@ def _fully_qualified_key(key: str) -> str:
     return f"{curr}::{key}" if curr else key
 
 
+<<<<<<< HEAD
 def _label(func: Callable[..., Any], *args, **kwargs) -> Optional[str]:
     for i, key in enumerate(signature(func).parameters.keys()):
+=======
+def _label(fn: Callable[..., Any], *args, **kwargs) -> Optional[str]:
+    for i, key in enumerate(signature(fn).parameters.keys()):
+>>>>>>> 85be7db (Improvements)
         if key == "label":
             return args[i]
     return kwargs.get("label")
