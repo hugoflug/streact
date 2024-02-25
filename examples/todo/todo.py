@@ -52,5 +52,5 @@ def todo() -> None:
             st.button("Edit", key=f"edit_{i}", on_click=partial(edit_todo_clicked, i), disabled=state.editing_index is not None)
         with c2:
             st.button("Delete", key=f"delete_{i}", on_click=partial(delete_todo_clicked, i), disabled=state.editing_index is not None)
-    st.text_input("New todo", set_value=state.new_todo_input, key="new", on_change=new_todo_added)
-    st.button("Clear todos", key="clear", on_click=clear_todos_clicked)
+    st.text_input("New todo", set_value=state.new_todo_input, on_change=new_todo_added)
+    st.button("Clear todos", on_click=clear_todos_clicked)

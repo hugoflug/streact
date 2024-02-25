@@ -77,7 +77,7 @@ I.e. instead of:
 c1, c2 = st.columns(2)
 c1.write("hello!")
 ```
-do
+you should write
 ```python
 c1, c2 = st.columns(2)
 with c1:

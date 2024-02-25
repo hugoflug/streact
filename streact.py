@@ -40,18 +40,21 @@ def __getattr__(attr: str) -> Any:
         return st_attr
 
     def wrapper(*args: Any, **kwargs: Any) -> Any:
-        if "key" in kwargs:
-            kwargs["key"] = _fully_qualified_key(kwargs["key"])
-            if "set_value" in kwargs:
-                st.session_state[kwargs["key"]] = kwargs["set_value"]
-                del kwargs["set_value"]
-            if (
-                "on_change" in kwargs
-                and callable(kwargs["on_change"])
-                and len(signature(kwargs["on_change"]).parameters) == 1
-            ):
-                on_change = kwargs["on_change"]
-                kwargs["on_change"] = lambda: on_change(st.session_state[kwargs["key"]])
+        if "key" in signature(st_attr).parameters:
+            key = kwargs["key"] if "key" in kwargs else _label(st_attr, args, kwargs)
+            if key:
+                fq_key = _fully_qualified_key(key)
+                kwargs["key"] = fq_key
+                if "set_value" in kwargs:
+                    st.session_state[fq_key] = kwargs["set_value"]
+                    del kwargs["set_value"]
+                if (
+                    "on_change" in kwargs
+                    and callable(kwargs["on_change"])
+                    and len(signature(kwargs["on_change"]).parameters) == 1
+                ):
+                    on_change = kwargs["on_change"]
+                    kwargs["on_change"] = lambda: on_change(st.session_state[fq_key])
         return st_attr(*args, **kwargs)
 
     return wrapper
@@ -60,3 +63,10 @@ def __getattr__(attr: str) -> Any:
 def _fully_qualified_key(key: str) -> str:
     curr = _current_key.get()
     return f"{curr}::{key}" if curr else key
+
+
+def _label(func: Callable[..., Any], *args, **kwargs) -> Optional[str]:
+    for i, key in enumerate(signature(func).parameters.keys()):
+        if key == "label":
+            return args[i]
+    return kwargs.get("label")
