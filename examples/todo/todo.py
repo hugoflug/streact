@@ -4,7 +4,6 @@ from typing import Optional
 
 import streact as st
 
-
 @dataclass
 class TodoState:
     todos: list[str]
@@ -49,8 +48,8 @@ def todo() -> None:
             st.write(f"- {todo}")
         c1, c2, _ = st.columns([0.15, 0.15, 0.7])
         with c1:
-            st.button("Edit", key=f"edit_{i}", on_click=partial(edit_todo_clicked, i), disabled=state.editing_index is not None)
+            st.button("Edit", key_index=i, on_click=partial(edit_todo_clicked, i), disabled=state.editing_index is not None)
         with c2:
-            st.button("Delete", key=f"delete_{i}", on_click=partial(delete_todo_clicked, i), disabled=state.editing_index is not None)
+            st.button("Delete", key_index=i, on_click=partial(delete_todo_clicked, i), disabled=state.editing_index is not None)
     st.text_input("New todo", set_value=state.new_todo_input, on_change=new_todo_added)
     st.button("Clear todos", on_click=clear_todos_clicked)

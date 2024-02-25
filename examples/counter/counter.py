@@ -17,5 +17,5 @@ def counter(title: str) -> None:
     def button_clicked():
         state.value += 1
 
-    st.button("Click", key="click", on_click=button_clicked)
+    st.button("Click", on_click=button_clicked)
     st.write(f"Clicked {state.value} times")

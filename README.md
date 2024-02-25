@@ -52,7 +52,7 @@ use
 
 ### @st.component
 
-The `component` decorator declares a function to be a component. In Streamlit, all keys must be globally unique. Inside a Streact component, keys are only required to be unique within that component. When calling a component function, you must always specify `key` as a key word argument.
+The `component` decorator declares a function to be a component. In Streamlit, all element keys must be globally unique. Inside a Streact component, keys are only required to be unique within that component. Because of this, whenever you want a reusable bit of Streamlit code, you should put it in a component.
 
 ### st.use_state
 `use_state` returns the current component's state. As input, it takes the initial value of the state. Unlike in React, there is no `set_state`. Just mutate the state directly instead.
@@ -66,6 +66,10 @@ In Streamlit, callbacks have no arguments. In Streact, `on_change` callbacks can
 
 ### set_value
 Input elements have a new `set_value` parameter. This will set the value of the element to the provided value. Note how this is different from `value`, which only decides the initial value of the element on first render.
+
+## Keys
+In Streact, element and component keys are automatically derived from the location of the function call in the source code, so they rarely have to specified explicitly.
+In some cases, like inside a loop, an element or component function will be called multiple times at the same source code location. In these cases, you can specify the `key_index` parameter, which needs to be unique for each function invocation at that source code location.
 
 ## Streamlit features not supported
 
