@@ -1,6 +1,6 @@
 from contextvars import ContextVar
 from inspect import signature
-from typing import Any, Callable, TypeVar
+from typing import Any, Callable, Optional, TypeVar
 
 import streamlit as st
 
